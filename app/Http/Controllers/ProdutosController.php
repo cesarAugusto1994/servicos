@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Produto;
+use App\Marca;
+use App\Modelo;
+use App\Cordas;
 
-class ClientesController extends Controller
-{   
+class ProdutosController extends Controller
+{
     /**
      * Create a new controller instance.
      *
@@ -16,6 +19,7 @@ class ClientesController extends Controller
     {
         $this->middleware('auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +27,16 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes  = Cliente::all();
-        return view('admin.clientes.index')->with('clientes', $clientes);
+        $produtos  = Produto::all();
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        $cordas = Cordas::all();
+
+        return view('admin.produtos.index')
+        ->with('produtos', $produtos)
+        ->with('marcas', $marcas)
+        ->with('modelos', $modelos)
+        ->with('cordas', $cordas);
     }
 
     /**
@@ -47,18 +59,19 @@ class ClientesController extends Controller
     {
         $data = $request->request->all();
 
-        $cliente = new Cliente();
+        $cliente = new Produto();
         $cliente->nome = $data['nome'];
-        $cliente->email = $data['email'];
-        $cliente->telefone_fixo = $data['telefone'];
-        $cliente->celular = $data['celular'];
-        $cliente->whatsapp = $data['whatsapp'];
-        $cliente->onde_joga = $data['onde_joga'];
+        $cliente->marca_id = $data['marca'];
+        $cliente->modelo_id = $data['modelo'];
+        $cliente->corda_id = $data['cordas'];
+        $cliente->nos = $data['nos'];
+        $cliente->cross_poly = $data['cross_poly'];
+        $cliente->cross_nylon = $data['cross_nylon'];
         $cliente->save();
 
-        flash('Cliente cadastrado com sucesso.')->success()->important();
+        flash('Produto cadastrado com sucesso.')->success()->important();
 
-        return redirect()->route('clients');
+        return redirect()->route('products');
     }
 
     /**
@@ -80,7 +93,7 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -94,18 +107,19 @@ class ClientesController extends Controller
     {
         $data = $request->request->all();
 
-        $cliente = Cliente::find($id);
+        $cliente = Produto::find($id);
         $cliente->nome = $data['nome'];
-        $cliente->email = $data['email'];
-        $cliente->telefone_fixo = $data['telefone'];
-        $cliente->celular = $data['celular'];
-        $cliente->whatsapp = $data['whatsapp'];
-        $cliente->onde_joga = $data['onde_joga'];
+        $cliente->marca_id = $data['marca'];
+        $cliente->modelo_id = $data['modelo'];
+        $cliente->corda_id = $data['cordas'];
+        $cliente->nos = $data['nos'];
+        $cliente->cross_poly = $data['cross_poly'];
+        $cliente->cross_nylon = $data['cross_nylon'];
         $cliente->save();
 
-        flash('Cliente editado com sucesso.')->success()->important();
+        flash('Produto editado com sucesso.')->success()->important();
 
-        return redirect()->route('clients');
+        return redirect()->route('products');
     }
 
     /**

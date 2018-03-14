@@ -119,6 +119,28 @@ return [
             'url'         => '/clients',
             'icon'        => 'users',
         ],
+        [
+            'text'    => 'Produtos',
+            'icon'    => 'truck',
+            'submenu' => [
+                [
+                    'text'    => 'Produtos',
+                    'url'     => '/products',
+                ],
+                [
+                    'text' => 'Marcas',
+                    'url'  => '/brands',
+                ],
+                [
+                    'text' => 'Modelos',
+                    'url'  => '/models',
+                ],
+                [
+                    'text' => 'Cordas',
+                    'url'  => '/ropes',
+                ],
+            ],
+        ],
         'Configurações',
         [
             'text' => 'Perfil',

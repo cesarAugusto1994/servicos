@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Marca;
 
-class ClientesController extends Controller
-{   
+class MarcasController extends Controller
+{
     /**
      * Create a new controller instance.
      *
@@ -16,6 +16,7 @@ class ClientesController extends Controller
     {
         $this->middleware('auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +24,8 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes  = Cliente::all();
-        return view('admin.clientes.index')->with('clientes', $clientes);
+        $marcas  = Marca::all();
+        return view('admin.marcas.index')->with('marcas', $marcas);
     }
 
     /**
@@ -47,18 +48,13 @@ class ClientesController extends Controller
     {
         $data = $request->request->all();
 
-        $cliente = new Cliente();
-        $cliente->nome = $data['nome'];
-        $cliente->email = $data['email'];
-        $cliente->telefone_fixo = $data['telefone'];
-        $cliente->celular = $data['celular'];
-        $cliente->whatsapp = $data['whatsapp'];
-        $cliente->onde_joga = $data['onde_joga'];
-        $cliente->save();
+        $marca = new Marca();
+        $marca->nome = $data['nome'];
+        $marca->save();
 
-        flash('Cliente cadastrado com sucesso.')->success()->important();
+        flash('Marca cadastrada com sucesso.')->success()->important();
 
-        return redirect()->route('clients');
+        return redirect()->route('brands');
     }
 
     /**
@@ -80,7 +76,7 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -94,18 +90,13 @@ class ClientesController extends Controller
     {
         $data = $request->request->all();
 
-        $cliente = Cliente::find($id);
-        $cliente->nome = $data['nome'];
-        $cliente->email = $data['email'];
-        $cliente->telefone_fixo = $data['telefone'];
-        $cliente->celular = $data['celular'];
-        $cliente->whatsapp = $data['whatsapp'];
-        $cliente->onde_joga = $data['onde_joga'];
-        $cliente->save();
+        $marca = Marca::find($id);
+        $marca->nome = $data['nome'];
+        $marca->save();
 
-        flash('Cliente editado com sucesso.')->success()->important();
+        flash('Marca editada com sucesso.')->success()->important();
 
-        return redirect()->route('clients');
+        return redirect()->route('brands');
     }
 
     /**
