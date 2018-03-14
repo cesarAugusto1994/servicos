@@ -115,6 +115,11 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'Ordens',
+            'url'         => '/orders',
+            'icon'        => 'bullhorn',
+        ],
+        [
             'text'        => 'Clientes',
             'url'         => '/clients',
             'icon'        => 'users',

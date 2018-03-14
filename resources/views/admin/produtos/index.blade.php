@@ -10,7 +10,7 @@
 
       @include('flash::message')
 
-      <div class="box box-info">
+      <div class="box box-default">
           <div class="box-header with-border">
             <h3 class="box-title">Listagem</h3>
 
@@ -22,11 +22,17 @@
           <!-- /.box-header -->
           <div class="box-body">
             <div class="table-responsive">
-              <table class="table no-margin">
+              <table class="table table-hover table-striped no-margin">
                 <thead>
                 <tr>
                   <th>Nome</th>
-
+                  <th>Cliente</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Cordas</th>
+                  <th>Nós</th>
+                  <th>Cross Poly</th>
+                  <th>Cross Nylon</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,14 +41,23 @@
                       data-url="{{ route('product_update', ['id' => $produto->id ]) }}"
                       data-id="{{ $produto->id }}"
                       data-nome="{{ $produto->nome }}"
+                      data-cliente="{{ $produto->cliente_id }}"
                       data-marca="{{ $produto->marca_id }}"
                       data-modelo="{{ $produto->modelo_id }}"
                       data-cordas="{{ $produto->corda_id }}"
                       data-nos="{{ $produto->nos }}"
                       data-cross-poly="{{ $produto->cross_poly }}"
                       data-cross-nylon="{{ $produto->cross_nylon }}"
+                      style="cursor:pointer"
                       >
                       <td><a href="#">{{ $produto->nome }}</a></td>
+                      <td>{{ $produto->cliente->nome }}</td>
+                      <td>{{ $produto->marca->nome }}</td>
+                      <td>{{ $produto->modelo->nome }}</td>
+                      <td>{{ $produto->cordas->nome }}</td>
+                      <td>{{ $produto->nos }}</td>
+                      <td>{{ $produto->cross_poly }}</td>
+                      <td>{{ $produto->cross_nylon }}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -73,6 +88,17 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+                      <div class="col-sm-10">
+                        <select name="cliente" id="cliente" class="form-control" required>
+                            @foreach($clientes as $cliente)
+                                <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label for="marca" class="col-sm-2 control-label">Marca</label>
                       <div class="col-sm-10">
                         <select name="marca" id="marca" class="form-control" required>
@@ -82,6 +108,7 @@
                         </select>
                       </div>
                     </div>
+
                     <div class="form-group">
                       <label for="modelo" class="col-sm-2 control-label">Modelo</label>
                       <div class="col-sm-10">
@@ -116,8 +143,8 @@
                       <label for="cross_poly" class="col-sm-2 control-label">Cross Poly</label>
                       <div class="col-sm-10">
                         <select name="cross_poly" id="cross_poly" class="form-control" required>
-                            <option value="2">6 mm</option>
-                            <option value="4">5,5 mm</option>
+                            <option value="6">6 mm</option>
+                            <option value="5.5">5,5 mm</option>
                         </select>
                       </div>
                     </div>
@@ -126,8 +153,8 @@
                       <label for="cross_nylon" class="col-sm-2 control-label">Cross Nylon</label>
                       <div class="col-sm-10">
                         <select name="cross_nylon" id="cross_nylon" class="form-control" required>
-                            <option value="2">5,5 mm</option>
-                            <option value="4">5 mm</option>
+                            <option value="5.5">5,5 mm</option>
+                            <option value="5">5 mm</option>
                         </select>
 
                       </div>
@@ -164,6 +191,7 @@
 
                 $("#id").val(self.data('id'));
                 $("#nome").val(self.data('nome'));
+                $("#cliente").val(self.data('cliente'));
 
                 $("#marca").val(self.data('marca'));
                 $("#modelo").val(self.data('modelo'));

@@ -39,3 +39,9 @@ Route::get('/ropes', 'CordasController@index')->name('ropes');
 Route::get('/rope/form/create', 'CordasController@create')->name('rope_create');
 Route::post('/rope/store', 'CordasController@store')->name('rope_store');
 Route::post('/rope/{id}/update', 'CordasController@update')->name('rope_update');
+
+Route::get('/orders', 'OrdensController@index')->name('orders');
+Route::get('/order/select-client', 'OrdensController@selectClient')->name('order_select_client');
+Route::get('/order/form/create', 'OrdensController@create')->name('order_create');
+Route::post('/order/store', 'OrdensController@store')->name('order_store');
+Route::post('/order/{id}/update', 'OrdensController@update')->name('order_update');

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Produto;
-use App\Marca;
-use App\Modelo;
-use App\Cordas;
+use App\Ordem;
 use App\Cliente;
+use App\Produto;
+use Request as Req;
 
-class ProdutosController extends Controller
+class OrdensController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,18 +27,18 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        $produtos  = Produto::all();
-        $marcas = Marca::all();
-        $modelos = Modelo::all();
-        $cordas = Cordas::all();
+        $ordens  = Ordem::all();
+
+        return view('admin.ordens.index')
+        ->with('orders', $ordens);
+    }
+
+    public function selectClient()
+    {
         $clientes = Cliente::all();
 
-        return view('admin.produtos.index')
-        ->with('clientes', $clientes)
-        ->with('produtos', $produtos)
-        ->with('marcas', $marcas)
-        ->with('modelos', $modelos)
-        ->with('cordas', $cordas);
+        return view('admin.ordens.selecionar')
+        ->with('clientes', $clientes);
     }
 
     /**
@@ -49,7 +48,14 @@ class ProdutosController extends Controller
      */
     public function create()
     {
-        //
+        $cliente = Req::get('cliente');
+        $cliente = Cliente::find($cliente);
+        $produtos = Produto::where('cliente_id', $cliente->id)->get();
+
+        return view('admin.ordens.create')
+        ->with('cliente', $cliente)
+        ->with('produtos', $produtos);
+
     }
 
     /**
@@ -62,20 +68,30 @@ class ProdutosController extends Controller
     {
         $data = $request->request->all();
 
-        $produto = new Produto();
-        $produto->nome = $data['nome'];
-        $produto->cliente_id = $data['cliente'];
-        $produto->marca_id = $data['marca'];
-        $produto->modelo_id = $data['modelo'];
-        $produto->corda_id = $data['cordas'];
-        $produto->nos = $data['nos'];
-        $produto->cross_poly = $data['cross_poly'];
-        $produto->cross_nylon = $data['cross_nylon'];
-        $produto->save();
+        $ordem = new Ordem();
+        $ordem->cliente_id = $data['cliente'];
+        $ordem->produto_id = $data['produto'];
 
-        flash('Produto cadastrado com sucesso.')->success()->important();
+        $dataEnc = \DateTime::createFromFormat('d/m/Y', $data['data_encordoamento']);
+        $ordem->data_encordoamento = $dataEnc->format('Y-m-d');
 
-        return redirect()->route('products');
+        $ordem->tensao = $data['tensao'];
+        $ordem->corda = $data['corda'];
+        $ordem->main_cross = $data['main_cross'];
+        $ordem->observacao = $data['observacao'];
+
+        $destino = "images/" . $_FILES['foto']['name'];
+        $arquivo_tmp = $_FILES['foto']['tmp_name'];
+
+        move_uploaded_file( $arquivo_tmp, $destino  );
+
+        if(isset($_FILES['foto'])) {
+            $ordem->foto = $destino;
+        }
+
+        $ordem->save();
+
+        return redirect()->route('orders');
     }
 
     /**
@@ -109,21 +125,7 @@ class ProdutosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->request->all();
-
-        $cliente = Produto::find($id);
-        $cliente->nome = $data['nome'];
-        $cliente->marca_id = $data['marca'];
-        $cliente->modelo_id = $data['modelo'];
-        $cliente->corda_id = $data['cordas'];
-        $cliente->nos = $data['nos'];
-        $cliente->cross_poly = $data['cross_poly'];
-        $cliente->cross_nylon = $data['cross_nylon'];
-        $cliente->save();
-
-        flash('Produto editado com sucesso.')->success()->important();
-
-        return redirect()->route('products');
+        //
     }
 
     /**

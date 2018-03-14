@@ -10,39 +10,48 @@
 
       @include('flash::message')
 
-      <div class="box box-info">
+      <div class="box box-default">
           <div class="box-header with-border">
             <h3 class="box-title">Clientes</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-default">Adicionar</button>
-
             </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <div class="table-responsive">
-              <table class="table no-margin">
+              <table class="table table-hover table-striped no-margin">
                 <thead>
                 <tr>
                   <th>Nome</th>
-
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Celular</th>
+                  <th>WhatsApp</th>
+                  <th>Onde Joga?</th>
                 </tr>
                 </thead>
                 <tbody>
                   @foreach($clientes as $cliente)
-                <tr class="listaCliente"
-                  data-url="{{ route('client_update', ['id' => $cliente->id ]) }}"
-                  data-id="{{ $cliente->id }}"
-                  data-nome="{{ $cliente->nome }}"
-                  data-email="{{ $cliente->email }}"
-                  data-telefone="{{ $cliente->telefone_fixo }}"
-                  data-celular="{{ $cliente->celular }}"
-                  data-whatsapp="{{ $cliente->whatsapp }}"
-                  data-onde-joga="{{ $cliente->onde_joga }}"
-                  >
-                  <td><a href="#">{{ $cliente->nome }}</a></td>
-                </tr>
+                    <tr class="listaCliente"
+                      data-url="{{ route('client_update', ['id' => $cliente->id ]) }}"
+                      data-id="{{ $cliente->id }}"
+                      data-nome="{{ $cliente->nome }}"
+                      data-email="{{ $cliente->email }}"
+                      data-telefone="{{ $cliente->telefone_fixo }}"
+                      data-celular="{{ $cliente->celular }}"
+                      data-whatsapp="{{ $cliente->whatsapp }}"
+                      data-onde-joga="{{ $cliente->onde_joga }}"
+                      style="cursor:pointer"
+                      >
+                      <td><a href="#">{{ $cliente->nome }}</a></td>
+                      <td>{{ $cliente->email }}</td>
+                      <td>{{ $cliente->telefone_fixo }}</td>
+                      <td>{{ $cliente->celular }}</td>
+                      <td>{{ $cliente->whatsapp }}</td>
+                      <td>{{ $cliente->onde_joga }}</td>
+                    </tr>
                   @endforeach
                 </tbody>
               </table>
