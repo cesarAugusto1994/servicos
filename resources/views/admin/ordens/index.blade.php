@@ -2,6 +2,10 @@
 
 @section('title', 'Serviços - Ordens')
 
+@section('css')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+@stop
+
 @section('content_header')
     <h1>Ordens</h1>
 @stop
@@ -78,36 +82,6 @@
 @stop
 
 @section('js')
-    <script>
-
-        $(document).ready(function() {
-
-            $('.listaProdutos').click(function() {
-
-                var self = $(this);
-
-                $("#modal-default").modal('show');
-
-                $("#id").val(self.data('id'));
-                $("#nome").val(self.data('nome'));
-                $("#cliente").val(self.data('cliente'));
-
-                $("#marca").val(self.data('marca'));
-                $("#modelo").val(self.data('modelo'));
-                $("#cordas").val(self.data('cordas'));
-                $("#nos").val(self.data('nos'));
-                $("#cross_poly").val(self.data('cross-poly'));
-                $("#cross_nylon").val(self.data('cross-nylon'));
-
-                $("#formProdutoModal").attr('action', self.data('url'));
-
-            });
-
-            $('#modal-default').on('hidden.bs.modal', function () {
-                  $("#formProdutoModal").attr('action', $("#url-produto-store").val());
-            });
-
-        });
-
-    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
 @stop
