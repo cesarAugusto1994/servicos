@@ -2,6 +2,10 @@
 
 @section('title', 'Serviços - Clientes')
 
+@section('css')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+@stop
+
 @section('content_header')
     <h1>Clientes</h1>
 @stop
@@ -90,21 +94,21 @@
                     <div class="form-group">
                       <label for="telefone" class="col-sm-2 control-label">Telefone</label>
                       <div class="col-sm-10">
-                        <input type="text" name="telefone" class="form-control" id="telefone" placeholder="Telefone">
+                        <input type="text" name="telefone" class="form-control" data-mask="(99)9999-9999" id="telefone" placeholder="Telefone">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="celular" class="col-sm-2 control-label">Celular</label>
                       <div class="col-sm-10">
-                        <input type="text" name="celular" class="form-control" id="celular" placeholder="Celular">
+                        <input type="text" name="celular" class="form-control" id="celular" data-mask="(99)99999-9999" placeholder="Celular">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="whatsapp" class="col-sm-2 control-label">WhatsApp</label>
                       <div class="col-sm-10">
-                        <input type="text" name="whatsapp" class="form-control" id="whatsapp" placeholder="WhatsApp">
+                        <input type="text" name="whatsapp" class="form-control" id="whatsapp" data-mask="(99)99999-9999" placeholder="WhatsApp">
                       </div>
                     </div>
 
@@ -137,7 +141,10 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!');
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
+    <script>
 
         $(document).ready(function() {
 

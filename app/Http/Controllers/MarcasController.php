@@ -16,7 +16,7 @@ class MarcasController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +24,7 @@ class MarcasController extends Controller
      */
     public function index()
     {
-        $marcas  = Marca::all();
+        $marcas  = Marca::orderBy('nome')->get();
         return view('admin.marcas.index')->with('marcas', $marcas);
     }
 
