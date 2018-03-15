@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Marca;
+use App\Modelo;
 
 class MarcasController extends Controller
 {
@@ -26,6 +27,12 @@ class MarcasController extends Controller
     {
         $marcas  = Marca::orderBy('nome')->get();
         return view('admin.marcas.index')->with('marcas', $marcas);
+    }
+
+    public function models($id)
+    {
+        $modelos = Modelo::where('marca_id', $id)->get();
+        return $modelos->toJson();
     }
 
     /**

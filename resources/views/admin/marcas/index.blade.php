@@ -9,7 +9,7 @@
 @section('content')
 
       @include('flash::message')
-      
+
       <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Listagem</h3>
@@ -105,6 +105,7 @@
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formMarcaModal").attr('action', $("#url-marca-store").val());
+                  $("#nome").val("");
             });
 
         });

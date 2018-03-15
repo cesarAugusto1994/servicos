@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modelo;
+use App\Marca;
 
 class ModelosController extends Controller
 {
@@ -16,7 +17,7 @@ class ModelosController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +26,10 @@ class ModelosController extends Controller
     public function index()
     {
         $modelos  = Modelo::all();
-        return view('admin.modelos.index')->with('modelos', $modelos);
+        $marcas  = Marca::orderBy('nome')->get();
+        return view('admin.modelos.index')
+        ->with('modelos', $modelos)
+        ->with('marcas', $marcas);
     }
 
     /**
@@ -50,6 +54,7 @@ class ModelosController extends Controller
 
         $modelo = new Modelo();
         $modelo->nome = $data['nome'];
+        $modelo->marca_id = $data['marca'];
         $modelo->save();
 
         flash('Modelo cadastrado com sucesso.')->success()->important();

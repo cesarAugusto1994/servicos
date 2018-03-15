@@ -9,7 +9,7 @@
 @section('content')
 
       @include('flash::message')
-      
+
       <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Listagem</h3>
@@ -26,7 +26,7 @@
                 <thead>
                 <tr>
                   <th>Nome</th>
-
+                  <th>Marca</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,8 +35,11 @@
                       data-url="{{ route('model_update', ['id' => $modelo->id ]) }}"
                       data-id="{{ $modelo->id }}"
                       data-nome="{{ $modelo->nome }}"
+                      data-marca="{{ $modelo->marca_id }}"
+                      style="cursor:pointer"
                       >
                       <td><a href="#">{{ $modelo->nome }}</a></td>
+                      <td>{{ $modelo->marca->nome }}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -64,6 +67,16 @@
                       <label for="nome" class="col-sm-2 control-label">Nome</label>
                       <div class="col-sm-10">
                         <input type="text" autofocus name="nome" class="form-control" id="nome" placeholder="Nome">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="marca" class="col-sm-2 control-label">Marca</label>
+                      <div class="col-sm-10">
+                        <select name="marca" id="marca" class="form-control" required>
+                            @foreach($marcas as $marca)
+                                <option value="{{ $marca->id }}">{{ $marca->nome }}</option>
+                            @endforeach
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -98,6 +111,7 @@
 
                 $("#id").val(self.data('id'));
                 $("#nome").val(self.data('nome'));
+                $("#marca").val(self.data('marca'));
 
                 $("#formModeloModal").attr('action', self.data('url'));
 
@@ -105,6 +119,7 @@
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formModeloModal").attr('action', $("#url-modelo-store").val());
+                  $("#nome").val("");
             });
 
         });

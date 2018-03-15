@@ -168,6 +168,7 @@
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formClienteModal").attr('action', $("#url-client-store").val());
+                  $("#nome").val("");
             });
 
         });

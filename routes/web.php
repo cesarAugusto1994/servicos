@@ -30,6 +30,8 @@ Route::get('/brand/form/create', 'MarcasController@create')->name('brand_create'
 Route::post('/brand/store', 'MarcasController@store')->name('brand_store');
 Route::post('/brand/{id}/update', 'MarcasController@update')->name('brand_update');
 
+Route::get('/brand/{id}/models', 'MarcasController@models')->name('brand_models');
+
 Route::get('/models', 'ModelosController@index')->name('models');
 Route::get('/model/form/create', 'ModelosController@create')->name('model_create');
 Route::post('/model/store', 'ModelosController@store')->name('model_store');

@@ -105,6 +105,7 @@
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formCordaModal").attr('action', $("#url-corda-store").val());
+                  $("#nome").val("");
             });
 
         });
