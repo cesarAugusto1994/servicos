@@ -15,8 +15,16 @@ class CreateOrdensTable extends Migration
     {
         Schema::create('ordens', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('produto_id')->unsigned();
-            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->string('nome');
+            $table->integer('marca_id')->unsigned();
+            $table->foreign('marca_id')->references('id')->on('marcas');
+            $table->integer('modelo_id')->unsigned();
+            $table->foreign('modelo_id')->references('id')->on('modelos');
+            $table->integer('corda_id')->unsigned();
+            $table->foreign('corda_id')->references('id')->on('cordas');
+            $table->integer('nos');
+            $table->float('cross_poly');
+            $table->float('cross_nylon');
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('data_encordoamento');

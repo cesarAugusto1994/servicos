@@ -31,11 +31,12 @@
                   <th>ID</th>
                   <th>Cliente</th>
                   <th>Produto</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
                   <th>Data Encordoamento</th>
                   <th>Tensão</th>
                   <th>Main Cross</th>
                   <th>Foto</th>
-                  <th>Observação</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,7 +45,7 @@
                       data-url="{{ route('order_update', ['id' => $order->id ]) }}"
                       data-id="{{ $order->id }}"
                       data-cliente="{{ $order->cliente->id }}"
-                      data-produto="{{ $order->produto->id }}"
+                      data-produto="{{ $order->nome }}"
                       data-data_encordoamento="{{ $order->data_encordoamento }}"
                       data-tensao="{{ $order->tensao }}"
                       data-main_cross="{{ $order->main_cross }}"
@@ -54,7 +55,9 @@
                       >
                       <td>{{ $order->id }}</td>
                       <td>{{ $order->cliente->nome }}</td>
-                      <td>{{ $order->produto->nome }}</td>
+                      <td>{{ $order->nome }}</td>
+                      <td>{{ $order->marca->nome }}</td>
+                      <td>{{ $order->modelo->nome }}</td>
                       <td>{{ $order->data_encordoamento->format('d/m/Y') }}</td>
                       <td>{{ $order->tensao }}</td>
                       <td>{{ $order->main_cross }}</td>
@@ -66,7 +69,6 @@
                           </div>
 
                       </td>
-                      <td>{{ $order->observacao }}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -78,10 +80,19 @@
 
         </div>
 
+        <input type="hidden" id="url-ordem" value="{{ route('order', $order->id) }}"/>
+
 
 @stop
 
 @section('js')
     <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
+    <script>
+
+        $(".listaOrdens").click(function() {
+            window.location.href = $("#url-ordem").val();
+        });
+
+    </script>
 @stop

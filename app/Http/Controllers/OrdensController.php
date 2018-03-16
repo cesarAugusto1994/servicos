@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Ordem;
 use App\Cliente;
 use App\Produto;
+use App\Marca;
+use App\Modelo;
+use App\Cordas;
 use Request as Req;
 
 class OrdensController extends Controller
@@ -52,9 +55,16 @@ class OrdensController extends Controller
         $cliente = Cliente::find($cliente);
         $produtos = Produto::where('cliente_id', $cliente->id)->get();
 
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        $cordas = Cordas::all();
+
         return view('admin.ordens.create')
         ->with('cliente', $cliente)
-        ->with('produtos', $produtos);
+        ->with('produtos', $produtos)
+        ->with('marcas', $marcas)
+        ->with('modelos', $modelos)
+        ->with('cordas', $cordas);
 
     }
 
@@ -70,10 +80,17 @@ class OrdensController extends Controller
 
         $ordem = new Ordem();
         $ordem->cliente_id = $data['cliente'];
-        $ordem->produto_id = $data['produto'];
+        $ordem->nome = $data['nome'];
 
         $dataEnc = \DateTime::createFromFormat('d/m/Y', $data['data_encordoamento']);
         $ordem->data_encordoamento = $dataEnc->format('Y-m-d');
+
+        $ordem->marca_id = $data['marca'];
+        $ordem->modelo_id = $data['modelo'];
+        $ordem->corda_id = $data['cordas'];
+        $ordem->nos = $data['nos'];
+        $ordem->cross_poly = $data['cross_poly'];
+        $ordem->cross_nylon = $data['cross_nylon'];
 
         $ordem->tensao = $data['tensao'];
         $ordem->corda = $data['corda'];
@@ -102,7 +119,16 @@ class OrdensController extends Controller
      */
     public function show($id)
     {
-        //
+        $ordem = Ordem::find($id);
+        $marcas = Marca::all();
+        $modelos = Modelo::all();
+        $cordas = Cordas::all();
+
+        return view('admin.ordens.details')
+        ->with('ordem', $ordem)
+        ->with('marcas', $marcas)
+        ->with('modelos', $modelos)
+        ->with('cordas', $cordas);
     }
 
     /**
