@@ -107,7 +107,7 @@
                             @endforeach
                         </select>
                       </div>
-                    </div>
+                    </div> 
 
                     <div class="form-group">
                       <label for="modelo" class="col-sm-2 control-label">Modelo</label>
@@ -206,6 +206,47 @@
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formProdutoModal").attr('action', $("#url-produto-store").val());
+                  $("#nome").val("");
+            });
+
+            $("#marca").change(function() {
+
+                var self = $(this);
+
+                $.get('/brand/'+ self.val() +'/models', function(data) {
+
+                    var modelos = JSON.parse(data);
+
+                    var options = "";
+
+                    $.each(modelos, function(index, item) {
+
+                      $("#modelo").html("");
+
+                      options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                    })
+
+                    $("#modelo").append(options);
+                });
+
+            });
+
+            var marca = $("#marca").val();
+
+            $.get('/brand/'+ marca +'/models', function(data) {
+
+                var modelos = JSON.parse(data);
+
+                var options = "";
+
+                $.each(modelos, function(index, item) {
+
+                  $("#modelo").html("");
+
+                  options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                })
+
+                $("#modelo").append(options);
             });
 
         });

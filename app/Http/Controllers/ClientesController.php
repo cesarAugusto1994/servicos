@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Cliente;
 
 class ClientesController extends Controller
-{   
+{
     /**
      * Create a new controller instance.
      *
@@ -116,6 +116,12 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+
+        $cliente->delete();
+
+        flash('Cliente removido com sucesso.')->success()->important();
+
+        return redirect()->route('clients');
     }
 }

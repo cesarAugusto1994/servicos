@@ -2,6 +2,10 @@
 
 @section('title', 'Serviços - Clientes')
 
+@section('css')
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+@stop
+
 @section('content_header')
     <h1>Clientes</h1>
 @stop
@@ -30,13 +34,13 @@
                   <th>Celular</th>
                   <th>WhatsApp</th>
                   <th>Onde Joga?</th>
-                  <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach($clientes as $cliente)
+                  @forelse($clientes as $cliente)
                     <tr class="listaCliente"
                       data-url="{{ route('client_update', ['id' => $cliente->id ]) }}"
+                      data-url-remove="{{ route('client_remove', ['id' => $cliente->id ]) }}"
                       data-id="{{ $cliente->id }}"
                       data-nome="{{ $cliente->nome }}"
                       data-email="{{ $cliente->email }}"
@@ -52,9 +56,10 @@
                       <td>{{ $cliente->celular }}</td>
                       <td>{{ $cliente->whatsapp }}</td>
                       <td>{{ $cliente->onde_joga }}</td>
-                      <td><a class="btn btn-xs btn-danger">Remover</a></td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr><td colspan="6">Nenhum cliente registrado até o momento.</td></tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -92,21 +97,21 @@
                     <div class="form-group">
                       <label for="telefone" class="col-sm-2 control-label">Telefone</label>
                       <div class="col-sm-10">
-                        <input type="text" name="telefone" class="form-control" id="telefone" placeholder="Telefone">
+                        <input type="text" name="telefone" class="form-control" data-mask="(99)9999-9999" id="telefone" placeholder="Telefone">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="celular" class="col-sm-2 control-label">Celular</label>
                       <div class="col-sm-10">
-                        <input type="text" name="celular" class="form-control" id="celular" placeholder="Celular">
+                        <input type="text" name="celular" class="form-control" id="celular" data-mask="(99)99999-9999" placeholder="Celular">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="whatsapp" class="col-sm-2 control-label">WhatsApp</label>
                       <div class="col-sm-10">
-                        <input type="text" name="whatsapp" class="form-control" id="whatsapp" placeholder="WhatsApp">
+                        <input type="text" name="whatsapp" class="form-control" id="whatsapp" data-mask="(99)99999-9999" placeholder="WhatsApp">
                       </div>
                     </div>
 
@@ -123,7 +128,37 @@
                   <!-- /.box-body -->
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                    <a class="btn btn-danger btnRemoverCliente" data-toggle="modal" data-target="#removerClienteModal">Remover</a>
                     <button type="submit" class="btn btn-primary">Salvar</button>
+                  </div>
+                  <!-- /.box-footer -->
+                </form>
+
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal modal-danger fade" id="removerClienteModal" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Remover Cliente</h4>
+              </div>
+
+                <form id="formRemoverClienteModal" class="form-horizontal" method="post">
+                  {{ csrf_field() }}
+                  <input type="hidden" id="removerCliente"/>
+                  <div class="modal-body text-center">
+                      <h1>Deseja remover este Cliente?</h1>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Sim</button>
                   </div>
                   <!-- /.box-footer -->
                 </form>
@@ -139,6 +174,8 @@
 @stop
 
 @section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js"></script>
     <script>
 
         $(document).ready(function() {
@@ -157,12 +194,26 @@
                 $("#whatsapp").val(self.data('whatsapp'));
                 $("#onde_joga").val(self.data('onde-joga'));
 
+                $("#removerCliente").val(self.data('url-remove'));
+
                 $("#formClienteModal").attr('action', self.data('url'));
 
             });
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formClienteModal").attr('action', $("#url-client-store").val());
+                  $("#nome").val("");
+                  $("#email").val("");
+                  $("#telefone").val("");
+                  $("#celular").val("");
+                  $("#whatsapp").val("");
+                  $("#onde_joga").val("");
+            });
+
+            $(".btnRemoverCliente").click(function() {
+
+                $("#formRemoverClienteModal").attr('action', $("#removerCliente").val());
+
             });
 
         });

@@ -9,7 +9,7 @@
 @section('content')
 
       @include('flash::message')
-      
+
       <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Listagem</h3>
@@ -32,9 +32,11 @@
                 <tbody>
                   @foreach($marcas as $marca)
                     <tr class="listaMarca"
+                      data-url-remove="{{ route('brand_remove', ['id' => $marca->id ]) }}"
                       data-url="{{ route('brand_update', ['id' => $marca->id ]) }}"
                       data-id="{{ $marca->id }}"
                       data-nome="{{ $marca->nome }}"
+                      style="cursor:pointer;"
                       >
                       <td><a href="#">{{ $marca->nome }}</a></td>
                     </tr>
@@ -70,7 +72,37 @@
                   <!-- /.box-body -->
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                    <a class="btn btn-danger btnRemoverMarca" data-toggle="modal" data-target="#removerMarcaModal">Remover</a>
                     <button type="submit" class="btn btn-primary">Salvar</button>
+                  </div>
+                  <!-- /.box-footer -->
+                </form>
+
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal modal-danger fade" id="removerMarcaModal" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Remover Marca</h4>
+              </div>
+
+                <form id="formRemoverMarcaModal" class="form-horizontal" method="post">
+                  {{ csrf_field() }}
+                  <input type="hidden" id="removerMarca"/>
+                  <div class="modal-body text-center">
+                      <h1>Deseja remover esta Marca?</h1>
+                  </div>
+                  <!-- /.box-body -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Sim</button>
                   </div>
                   <!-- /.box-footer -->
                 </form>
@@ -99,12 +131,21 @@
                 $("#id").val(self.data('id'));
                 $("#nome").val(self.data('nome'));
 
+                $("#removerMarca").val(self.data('url-remove'));
+
                 $("#formMarcaModal").attr('action', self.data('url'));
 
             });
 
             $('#modal-default').on('hidden.bs.modal', function () {
                   $("#formMarcaModal").attr('action', $("#url-marca-store").val());
+                  $("#nome").val("");
+            });
+
+            $(".btnRemoverMarca").click(function() {
+
+                $("#formRemoverMarcaModal").attr('action', $("#removerMarca").val());
+
             });
 
         });

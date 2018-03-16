@@ -125,13 +125,9 @@ return [
             'icon'        => 'users',
         ],
         [
-            'text'    => 'Produtos',
+            'text'    => 'Cadastros',
             'icon'    => 'truck',
             'submenu' => [
-                [
-                    'text'    => 'Produtos',
-                    'url'     => '/products',
-                ],
                 [
                     'text' => 'Marcas',
                     'url'  => '/brands',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Marca;
+use App\Modelo;
 
 class MarcasController extends Controller
 {
@@ -16,7 +17,7 @@ class MarcasController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +25,14 @@ class MarcasController extends Controller
      */
     public function index()
     {
-        $marcas  = Marca::all();
+        $marcas  = Marca::orderBy('nome')->get();
         return view('admin.marcas.index')->with('marcas', $marcas);
+    }
+
+    public function models($id)
+    {
+        $modelos = Modelo::where('marca_id', $id)->get();
+        return $modelos->toJson();
     }
 
     /**
@@ -107,6 +114,15 @@ class MarcasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $marca = Marca::find($id);
+
+        if($marca->modelos->isEmpty()) {
+            $marca->delete();
+            flash('Marca removida com sucesso.')->success()->important();
+        } else {
+            flash('Remova primeiro os modelos vinculados à esta marca!.')->warning()->important();
+        }
+
+        return redirect()->route('brands');
     }
 }
