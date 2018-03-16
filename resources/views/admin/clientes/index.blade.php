@@ -30,6 +30,7 @@
                   <th>Celular</th>
                   <th>WhatsApp</th>
                   <th>Onde Joga?</th>
+                  <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,6 +52,7 @@
                       <td>{{ $cliente->celular }}</td>
                       <td>{{ $cliente->whatsapp }}</td>
                       <td>{{ $cliente->onde_joga }}</td>
+                      <td><a class="btn btn-xs btn-danger">Remover</a></td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -137,7 +139,7 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!');
+    <script>
 
         $(document).ready(function() {
 
