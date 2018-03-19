@@ -126,7 +126,7 @@ return [
         ],
         [
             'text'    => 'Cadastros',
-            'icon'    => 'truck',
+            'icon'    => 'plus',
             'submenu' => [
                 [
                     'text' => 'Marcas',

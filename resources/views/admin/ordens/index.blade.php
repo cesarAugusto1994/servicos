@@ -30,7 +30,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Cliente</th>
-                  <th>Produto</th>
+                  <th>Item</th>
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Data Encordoamento</th>
@@ -57,8 +57,8 @@
                       <td>{{ $order->id }}</td>
                       <td>{{ $order->cliente->nome }}</td>
                       <td>{{ $order->nome }}</td>
-                      <td>{{ $order->marca->nome }}</td>
-                      <td>{{ $order->modelo->nome }}</td>
+                      <td>{{ $order->marca ? $order->marca->nome : '-' }}</td>
+                      <td>{{ $order->modelo ? $order->modelo->nome : '-' }}</td>
                       <td>{{ $order->data_encordoamento->format('d/m/Y') }}</td>
                       <td>{{ $order->tensao }}</td>
                       <td>{{ $order->main_cross }}</td>

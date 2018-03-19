@@ -36,9 +36,9 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="nome" class="col-sm-2 control-label">Produto</label>
+                          <label for="nome" class="col-sm-2 control-label">Raquete</label>
                           <div class="col-sm-10">
-                            <input type="text" autofocus name="nome" class="form-control" id="nome" placeholder="Nome">
+                            <input type="text" autofocus name="nome" required class="form-control" id="nome" placeholder="Nome">
                           </div>
                         </div>
                         <div class="form-group">
@@ -117,13 +117,13 @@
                         <div class="form-group">
                           <label for="tensao" class="col-sm-2 control-label">Tensão</label>
                           <div class="col-sm-10">
-                              <input type="text" name="tensao" id="tensao" class="form-control"/>
+                              <input type="text" name="tensao" id="tensao" required class="form-control"/>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="corda" class="col-sm-2 control-label">Corda</label>
                           <div class="col-sm-10">
-                              <input type="text" name="corda" id="corda" class="form-control"/>
+                              <input type="text" name="corda" id="corda" required class="form-control"/>
                           </div>
                         </div>
                         <div class="form-group">
@@ -177,6 +177,47 @@
               autoclose: true,
               language: "pt-BR"
             });
+
+            $("#marca").change(function() {
+
+                var self = $(this);
+
+                $.get('/brand/'+ self.val() +'/models', function(data) {
+
+                    var modelos = JSON.parse(data);
+
+                    var options = "";
+
+                    $.each(modelos, function(index, item) {
+
+                      $("#modelo").html("");
+
+                      options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                    })
+
+                    $("#modelo").append(options);
+                });
+
+            });
+
+            var marca = $("#marca").val();
+
+            $.get('/brand/'+ marca +'/models', function(data) {
+
+                var modelos = JSON.parse(data);
+
+                var options = "";
+
+                $.each(modelos, function(index, item) {
+
+                  $("#modelo").html("");
+
+                  options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                })
+
+                $("#modelo").append(options);
+            });
+
         });
     </script>
 

@@ -151,7 +151,39 @@ class OrdensController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->request->all();
+
+        $ordem = Ordem::find($id);
+        $ordem->cliente_id = $data['cliente'];
+        $ordem->nome = $data['nome'];
+
+        $dataEnc = \DateTime::createFromFormat('d/m/Y', $data['data_encordoamento']);
+        $ordem->data_encordoamento = $dataEnc->format('Y-m-d');
+
+        $ordem->marca_id = $data['marca'];
+        $ordem->modelo_id = $data['modelo'];
+        $ordem->corda_id = $data['cordas'];
+        $ordem->nos = $data['nos'];
+        $ordem->cross_poly = $data['cross_poly'];
+        $ordem->cross_nylon = $data['cross_nylon'];
+
+        $ordem->tensao = $data['tensao'];
+        $ordem->corda = $data['corda'];
+        $ordem->main_cross = $data['main_cross'];
+        $ordem->observacao = $data['observacao'];
+
+        $destino = "images/" . $_FILES['foto']['name'];
+        $arquivo_tmp = $_FILES['foto']['tmp_name'];
+
+        move_uploaded_file( $arquivo_tmp, $destino  );
+
+        if(isset($_FILES['foto'])) {
+            $ordem->foto = $destino;
+        }
+
+        $ordem->save();
+
+        return redirect()->route('orders');
     }
 
     /**

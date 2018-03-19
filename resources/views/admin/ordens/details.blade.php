@@ -22,7 +22,7 @@
           <!-- /.box-header -->
           <div class="box-body">
 
-              <form id="formOrderSelectClient" enctype="multipart/form-data" class="form-horizontal" action="{{ route('order_store') }}" method="post">
+              <form id="formOrderSelectClient" enctype="multipart/form-data" class="form-horizontal" action="{{ route('order_update', ['id' => $ordem->id]) }}" method="post">
                 {{csrf_field()}}
 
                 <div class="row">
@@ -56,7 +56,7 @@
                           <div class="col-sm-10">
                             <select name="modelo" id="modelo" class="form-control" required>
                                 @foreach($modelos as $modelo)
-                                    <option value="{{ $modelo->id }}"  {{ $ordem->modelo->id == $modelo->id ? 'selected' : '' }}>{{ $modelo->nome }}</option>
+                                    <option value="{{ $modelo->id }}"  {{ $ordem->modelo && $ordem->modelo->id == $modelo->id ? 'selected' : '' }}>{{ $modelo->nome }}</option>
                                 @endforeach
                             </select>
                           </div>
@@ -136,20 +136,26 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="corda" class="col-sm-2 control-label">Foto </label>
+                          <label for="corda" class="col-sm-2 control-label">Foto</label>
                           <div class="col-sm-10">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                               <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                <img src="{{ $ordem->foto }}" data-src="holder.js/300x200" alt="...">
+                                <img data-src="holder.js/300x200" src="/{{ $ordem->foto }}" alt="...">
                               </div>
-                            </div>
+                              <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                              <div>
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Selecionar Imagem</span><span class="fileinput-exists">Trocar</span><input type="file" value="{{ $ordem->foto }}" name="foto"></span>
+                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                              </div>
+                              </div>
                           </div>
                         </div>
                     </div>
 
                 </div>
 
-                <a class="btn btn-success" href="{{ route('orders') }}">Voltar</a>
+                <button class="btn btn-success">Salvar</button>
+                <a class="btn btn-white" href="{{ route('orders') }}">Voltar</a>
               </form>
 
           </div>
@@ -172,7 +178,50 @@
               autoclose: true,
               language: "pt-BR"
             });
+
+            $("#marca").change(function() {
+
+                var self = $(this);
+
+                $.get('/brand/'+ self.val() +'/models', function(data) {
+
+                    var modelos = JSON.parse(data);
+
+                    var options = "";
+
+                    $.each(modelos, function(index, item) {
+
+                      $("#modelo").html("");
+
+                      options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                    })
+
+                    $("#modelo").append(options);
+                });
+
+            });
+
+            var marca = $("#marca").val();
+
+            $.get('/brand/'+ marca +'/models', function(data) {
+
+                var modelos = JSON.parse(data);
+
+                var options = "";
+
+                $.each(modelos, function(index, item) {
+
+                  $("#modelo").html("");
+
+                  options += '<option value="'+ item.id +'">' +item.nome+ '</option>';
+                })
+
+                $("#modelo").append(options);
+            });
+
         });
+
+
     </script>
 
 @stop

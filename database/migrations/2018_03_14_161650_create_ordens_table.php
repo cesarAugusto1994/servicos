@@ -27,8 +27,8 @@ class CreateOrdensTable extends Migration
             $table->string('tensao');
             $table->string('corda');
             $table->float('main_cross');
-            $table->string('foto');
-            $table->text('observacao');
+            $table->string('foto')->nullable();
+            $table->text('observacao')->nullable();
             $table->timestamps();
         });
     }
