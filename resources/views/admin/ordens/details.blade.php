@@ -17,7 +17,7 @@
 
       <div class="box box-default">
           <div class="box-header with-border">
-            <h3 class="box-title">Criar Ordem</h3>
+            <h3 class="box-title">Detalhes Ordem</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -36,7 +36,7 @@
                           </div>
                         </div>
                         <div class="form-group">
-                          <label for="nome" class="col-sm-2 control-label">Produto</label>
+                          <label for="nome" class="col-sm-2 control-label">Raquete</label>
                           <div class="col-sm-10">
                             <input type="text" autofocus name="nome" value="{{ $ordem->nome }}" class="form-control" id="nome" placeholder="Nome">
                           </div>
