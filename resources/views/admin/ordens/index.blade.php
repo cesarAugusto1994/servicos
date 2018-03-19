@@ -30,7 +30,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Cliente</th>
-                  <th>Item</th>
+                  <th>Raquete</th>
                   <th>Marca</th>
                   <th>Modelo</th>
                   <th>Data Encordoamento</th>
